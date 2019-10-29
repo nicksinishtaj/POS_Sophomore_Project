@@ -38,7 +38,10 @@ namespace WebAPI
       services.AddDbContext<PaymentDetailContext>(options =>
       options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
 
-      services.AddCors();
+      services.AddDbContext<TicketDetailContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+
+            services.AddCors();
 
     }
 
