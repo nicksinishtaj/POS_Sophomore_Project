@@ -21,44 +21,20 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Tickets
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetPaymentDetails()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TicketDetail>>> GetTickets()
         {
-            return await _context.Tickets.ToListAsync();
-        }
-
-        // GET: api/Tickets/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetTicket([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var ticket = await _context.Tickets.FindAsync(id);
-
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(ticket);
+            return await _context.TicketDetails.ToListAsync();
         }
 
         // PUT: api/Tickets/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicket([FromRoute] int id, [FromBody] Ticket ticket)
+        public async Task<IActionResult> PutTicket(int id, TicketDetail ticket)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != ticket.order_ID)
             {
                 return BadRequest();
             }
-
             _context.Entry(ticket).State = EntityState.Modified;
 
             try
@@ -80,16 +56,26 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Tickets
-        [HttpPost]
-        public async Task<IActionResult> PostTicket([FromBody] Ticket ticket)
+        // GET: api/Tickets/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TicketDetail>> GetTicket(int id)
         {
-            if (!ModelState.IsValid)
+            var paymentDetail = await _context.TicketDetails.FindAsync(id);
+
+            if (paymentDetail == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            _context.Tickets.Add(ticket);
+            return paymentDetail;
+        }
+
+        // POST: api/Tickets
+        [HttpPost]
+        public async Task<IActionResult> PostTicket(TicketDetail ticket)
+        {
+
+            _context.TicketDetails.Add(ticket);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTicket", new { id = ticket.order_ID }, ticket);
@@ -97,28 +83,24 @@ namespace WebAPI.Controllers
 
         // DELETE: api/Tickets/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTicket([FromRoute] int id)
+        public async Task<ActionResult<TicketDetail>> DeleteTicket(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            var ticket = await _context.Tickets.FindAsync(id);
+            var ticket = await _context.TicketDetails.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
             }
 
-            _context.Tickets.Remove(ticket);
+            _context.TicketDetails.Remove(ticket);
             await _context.SaveChangesAsync();
 
-            return Ok(ticket);
+            return ticket;
         }
 
         private bool TicketExists(int id)
         {
-            return _context.Tickets.Any(e => e.order_ID == id);
+            return _context.TicketDetails.Any(e => e.order_ID == id);
         }
     }
 }

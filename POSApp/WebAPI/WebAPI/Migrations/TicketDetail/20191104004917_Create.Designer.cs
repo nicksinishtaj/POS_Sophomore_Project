@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Models;
 
 namespace WebAPI.Migrations.TicketDetail
 {
     [DbContext(typeof(TicketDetailContext))]
-    partial class TicketDetailContextModelSnapshot : ModelSnapshot
+    [Migration("20191104004917_Create")]
+    partial class Create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace WebAPI.Migrations.TicketDetail
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebAPI.Models.TicketDetail", b =>
+            modelBuilder.Entity("WebAPI.Models.Ticket", b =>
                 {
                     b.Property<int>("order_ID")
                         .ValueGeneratedOnAdd()
@@ -28,15 +30,18 @@ namespace WebAPI.Migrations.TicketDetail
                     b.Property<DateTime>("order_DATETIME")
                         .HasColumnType("DateTime2");
 
-                    b.Property<int>("order_QTY");
+                    b.Property<string>("order_QTY")
+                        .IsRequired();
 
-                    b.Property<int>("order_Total");
+                    b.Property<string>("order_Total")
+                        .IsRequired();
 
-                    b.Property<int>("prod_ID");
+                    b.Property<string>("prod_ID")
+                        .IsRequired();
 
                     b.HasKey("order_ID");
 
-                    b.ToTable("TicketDetails");
+                    b.ToTable("Tickets");
                 });
 #pragma warning restore 612, 618
         }
