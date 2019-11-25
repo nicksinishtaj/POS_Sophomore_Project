@@ -1,0 +1,89 @@
+/* You can add global styles to this file, and also import other style files */
+input.ng-touched.ng-invalid{
+    border-color: #dc3545;
+}
+
+input.ng-valid{
+    border-color: #28a745;
+}
+
+.green-icon{
+    color: #28a745;
+}
+.red-icon{
+    color: #dc3545;
+}
+
+#toast-container > div {
+    opacity:1;
+}
+
+table tr:hover{
+    cursor: pointer;
+}
+
+.clsActionTable
+{
+    width: 100%;
+    color: white;
+    font-size: smaller;
+}
+
+.clsActionButton
+{
+    width: 128px;
+}
+#idActionPlane
+{
+left: 0px;
+bottom: 0px;
+width:100%;
+background-color: #4E5A81;
+color: White;
+}
+
+:host .arrow-button {
+	 -webkit-tap-highlight-color: transparent;
+	 background: transparent;
+	 border: 0;
+	 color: black;
+	 font-family: 'Roboto Mono', monospace;
+}
+ :host .arrow-button:focus, :host .arrow-button:active {
+	 color: #180099;
+	 outline: 0;
+}
+ :host .my-prompt .box {
+	 text-align: center;
+	 border: 1px solid white;
+	 padding: 3ch;
+	 position: relative;
+	 min-width: 30ch;
+}
+ :host .my-prompt header {
+	 position: absolute;
+	 display: inline-block;
+	 left: 0;
+	 right: 0;
+	 top: -0.65em;
+}
+ :host .my-prompt header .title {
+	 background: #180099;
+	 padding: 0 1ch;
+}
+ :host .my-prompt footer {
+	 padding-top: 2ch;
+}
+ :host .my-prompt button {
+	 -webkit-tap-highlight-color: transparent;
+	 background: transparent;
+	 border: 0;
+	 color: #fff;
+	 font-family: 'Roboto Mono', monospace;
+	 margin: 1ch;
+}
+ :host .my-prompt button:focus {
+	 background: #000;
+	 outline: 0;
+}
+ 

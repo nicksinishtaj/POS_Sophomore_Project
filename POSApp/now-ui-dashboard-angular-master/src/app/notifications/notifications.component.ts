@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { TicketService } from './../shared/ticketservice.service';
+import { Ticket } from '../shared/ticketclass.model';
+import { HttpClient } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog, MatDialogConfig} from '@angular/material';
 
 @Component({
   selector: 'app-notifications',
@@ -8,62 +13,103 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor(private toastr: ToastrService) {}
-  showNotification(from, align){
-
-      const color = Math.floor((Math.random() * 5) + 1);
-
-      switch(color){
-        case 1:
-        this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span> Welcome to <b>Now Ui Dashboard</b> - a beautiful freebie for every web developer.', '', {
-           timeOut: 8000,
-           closeButton: true,
-           enableHtml: true,
-           toastClass: "alert alert-info alert-with-icon",
-           positionClass: 'toast-' + from + '-' +  align
-         });
-        break;
-        case 2:
-        this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span> Welcome to <b>Now Ui Dashboard</b> - a beautiful freebie for every web developer.', '', {
-           timeOut: 8000,
-           closeButton: true,
-           enableHtml: true,
-           toastClass: "alert alert-success alert-with-icon",
-           positionClass: 'toast-' + from + '-' +  align
-         });
-        break;
-        case 3:
-        this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Welcome to <b>Now Ui Dashboard</b> - a beautiful freebie for every web developer.', '', {
-           timeOut: 8000,
-           closeButton: true,
-           enableHtml: true,
-           toastClass: "alert alert-warning alert-with-icon",
-           positionClass: 'toast-' + from + '-' +  align
-         });
-        break;
-        case 4:
-        this.toastr.error('<span class="now-ui-icons ui-1_bell-53"></span> Welcome to <b>Now Ui Dashboard</b> - a beautiful freebie for every web developer.', '', {
-           timeOut: 8000,
-           enableHtml: true,
-           closeButton: true,
-           toastClass: "alert alert-danger alert-with-icon",
-           positionClass: 'toast-' + from + '-' +  align
-         });
-         break;
-         case 5:
-         this.toastr.show('<span class="now-ui-icons ui-1_bell-53"></span> Welcome to <b>Now Ui Dashboard</b> - a beautiful freebie for every web developer.', '', {
-            timeOut: 8000,
-            closeButton: true,
-            enableHtml: true,
-            toastClass: "alert alert-primary alert-with-icon",
-            positionClass: 'toast-' + from + '-' +  align
-          });
-        break;
-        default:
-        break;
-      }
-  }
+  constructor(private toastr: ToastrService, 
+              private service: TicketService) {}
+  
   ngOnInit() {
+    this.resetForm();
+    this.service.refreshList()
   }
+
+  resetForm(form?: NgForm) {
+    if (form != null)
+      form.form.reset();
+    this.service.formData = {
+      order_ID: 0,
+      order_DATETIME: new Date(),
+      order_QTY: 0,
+      order_Total: 0,
+      prod_ID: 0,
+      order_Name: '',
+      tip: 0,
+      deposit: 0,
+      isOpen: true
+    }
+  }
+
+  onSubmit(form: NgForm) {
+    if (this.service.formData.order_ID == 0)
+      this.insertRecord(form);
+    else
+      this.updateRecord(form);
+  }
+
+  insertRecord(form: NgForm) {
+    this.service.postTicket().subscribe(
+      res => {
+        debugger;
+        this.resetForm(form);
+        this.toastr.success('Submitted successfully', 'Ticket Created');
+        this.service.refreshList();
+      },
+      err => {
+        debugger;
+        console.log(err);
+      }
+    )
+  }
+  updateRecord(form: NgForm) {
+    this.service.putTicket().subscribe(
+      res => {
+        this.resetForm(form);
+        this.toastr.info('Submitted successfully', 'Ticket');
+        this.service.refreshList();
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  populateForm(pd: Ticket) {
+    this.service.formData = Object.assign({}, pd);
+  }
+
+  onDelete(PMId) {
+    if (confirm('Are you sure to delete this ticket ?')) {
+      this.service.deleteTicket(PMId)
+        .subscribe(res => {
+          debugger;
+          this.service.refreshList();
+          this.toastr.warning('Deleted successfully', 'Ticket Deletion');
+        },
+          err => {
+            debugger;
+            console.log(err);
+          })
+    }
+ }
+
+ onCashOut(form: NgForm) {
+  let myDialog:any = <any>document.getElementById("myDialog");
+    myDialog.showModal();
+
+ }
+
+
+ PopupOpen = false;
+
+  openPopup() {
+    this.PopupOpen = true;
+  }
+
+  deleteOption() {
+    this.PopupOpen = false;
+  }
+
+  cancelOption() {
+    this.PopupOpen = false;
+  }
+
 
 }

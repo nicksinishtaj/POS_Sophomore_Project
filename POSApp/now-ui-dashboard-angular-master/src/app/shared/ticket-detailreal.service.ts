@@ -1,38 +1,30 @@
+import { PaymentDetail } from './ticket-detailreal.model';
 import { Injectable } from '@angular/core';
-import { TicketDetailreal } from './ticket-detailreal.model';
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TicketDetailrealService {
+export class PaymentDetailService {
+  formData: PaymentDetail;
+  readonly rootURL = 'http://localhost:62837/api';
+  list : PaymentDetail[];
 
+  constructor(private http: HttpClient) { }
 
-
-
-    formData: TicketDetailreal
-    readonly rootURL = 'http://localhost:62837/api';
-    list : TicketDetailreal[];
-
-  constructor(private http:HttpClient) { }
-
-  postTicket(){
-    return this.http.post(this.rootURL+'/Tickets', this.formData)
+  postPaymentDetail() {
+    return this.http.post(this.rootURL + '/PaymentDetail', this.formData);
   }
-
-  putTicket()
-  {
-    return this.http.put(this.rootURL + '/Tickets' + this.formData.order_ID, this.formData);
+  putPaymentDetail() {
+    return this.http.put(this.rootURL + '/PaymentDetail/'+ this.formData.PMId, this.formData);
   }
-
   deletePaymentDetail(id) {
-    return this.http.delete(this.rootURL + '/Tickets'+ id);
+    return this.http.delete(this.rootURL + '/PaymentDetail/'+ id);
   }
-
 
   refreshList(){
-    this.http.get(this.rootURL + '/Tickets')
+    this.http.get(this.rootURL + '/PaymentDetail')
     .toPromise()
-    .then(res => this.list = res as TicketDetailreal[]);
+    .then(res => this.list = res as PaymentDetail[]);
   }
 }

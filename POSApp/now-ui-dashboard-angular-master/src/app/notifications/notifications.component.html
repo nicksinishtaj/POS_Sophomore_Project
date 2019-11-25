@@ -1,134 +1,110 @@
-<div class="panel-header">
-  <div class="header text-center">
-    <h2 class="title">Notifications</h2>
-    <p class="category">Please checkout the
-      <a href="https://scttcper.github.io/ngx-toastr/" target="_blank">full documentation.</a>
-    </p>
-  </div>
-</div>
-<div class="main-content">
+<div class="jumbtron">
+  <h1 class="display-4 text-center">Create a Ticket</h1>
+  <hr>
   <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">Notifications Style</h4>
-        </div>
-        <div class="card-body">
-          <div class="alert alert-info">
-            <span>This is a plain notification</span>
-          </div>
-          <div class="alert alert-info">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span>This is a notification with close button.</span>
-          </div>
-          <div class="alert alert-info alert-with-icon" data-notify="container">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
-            <span data-notify="message">This is a notification with close button and icon.</span>
-          </div>
-          <div class="alert alert-info alert-with-icon" data-notify="container">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
-            <span data-notify="message">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">Notification states</h4>
-        </div>
-        <div class="card-body">
-          <div class="alert alert-primary">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span>
-              <b> Primary - </b> This is a regular notification made with ".alert-primary"</span>
-          </div>
-          <div class="alert alert-info">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span>
-              <b> Info - </b> This is a regular notification made with ".alert-info"</span>
-          </div>
-          <div class="alert alert-success">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span>
-              <b> Success - </b> This is a regular notification made with ".alert-success"</span>
-          </div>
-          <div class="alert alert-warning">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span>
-              <b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
-          </div>
-          <div class="alert alert-danger">
-            <button type="button" aria-hidden="true" class="close">
-              <i class="now-ui-icons ui-1_simple-remove"></i>
-            </button>
-            <span>
-              <b> Danger - </b> This is a regular notification made with ".alert-danger"</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="places-buttons">
-            <div class="row">
-              <div class="col-md-6 ml-auto mr-auto text-center">
-                <h4 class="card-title">
-                  Notifications Places
-                  <p class="category">Click to view notifications</p>
-                </h4>
+      <div class="col-md-5">
+          <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+              <input type="hidden" name="order_ID" [value]="service.formData.order_ID">
+              <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text bg-white">
+                        <i class="fas fa-user-circle" [class.green-icon]="order_DATETIME.valid" [class.red-icon]="order_DATETIME.invalid && order_DATETIME.touched"></i>
+                      </div>
+                    </div>
+                    <input name="Date" #order_DATETIME="ngModel" [(ngModel)]="service.formData.order_DATETIME" class="form-control"
+                  placeholder="Date" required>
+                  </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-8 ml-auto mr-auto">
-                <div class="row">
-                  <div class="col-md-4">
-                    <button class="btn btn-primary btn-block" (click)="showNotification('top','left')">Top Left</button>
+              <!-- <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text bg-white">
+                        <i class="far fa-credit-card"  [class.red-icon]="order_QTY.valid" [class.red-icon]="order_QTY.invalid && order_QTY.touched"></i>
+                      </div>
+                    </div>
+                    <input name="order_QTY" #order_QTY="ngModel" [(ngModel)]="service.formData.order_QTY" 
+                    class="form-control" placeholder="Quantity" maxlength="10" minlength="1">
                   </div>
-                  <div class="col-md-4">
-                    <button class="btn btn-primary btn-block" (click)="showNotification('top','center')">Top Center</button>
-                  </div>
-                  <div class="col-md-4">
-                    <button class="btn btn-primary btn-block" (click)="showNotification('top','right')">Top Right</button>
-                  </div>
+                </div> -->
+                <div class="form-row">
+                    <div class="form-group col-md-7">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text bg-white">
+                            <i class="fas fa-calendar-alt"  [class.green-icon]="order_QTY.valid" [class.red-icon]="order_QTY.invalid && order_QTY.touched"></i>
+                          </div>
+                        </div>
+                        <input name="order_QTY" #order_QTY="ngModel" [(ngModel)]="service.formData.order_QTY" class="form-control"
+                          placeholder="MM/YY" maxlength="10" minlength="1">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text bg-white">
+                              <i class="fas fa-key"  [class.green-icon]="prod_ID.valid" [class.red-icon]="prod_ID.invalid && prod_ID.touched"></i>
+                            </div>
+                          </div>
+                          <input type="prod_ID" name="prod_ID" #prod_ID="ngModel" [(ngModel)]="service.formData.prod_ID" class="form-control" placeholder="Prod Id"
+                          required  maxlength="10" minlength="1">
+                        </div>
+                      </div>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-8 ml-auto mr-auto">
-                <div class="row">
-                  <div class="col-md-4">
-                    <button class="btn btn-primary btn-block" (click)="showNotification('bottom','left')">Bottom Left</button>
+                <div class="form-group">
+                    <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid"><i class="fas fa-database"></i> Submit</button>
                   </div>
-                  <div class="col-md-4">
-                    <button class="btn btn-primary btn-block" (click)="showNotification('bottom','center')">Bottom Center</button>
-                  </div>
-                  <div class="col-md-4">
-                    <button class="btn btn-primary btn-block" (click)="showNotification('bottom','right')">Bottom Right</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </form>
           </div>
-        </div>
-      </div>
-    </div>
+                <div class="col-md-7">
+                    <table class="table table-hover">
+                        <tr *ngFor="let pd of service.list">
+                          <td (click)="populateForm(pd)">{{pd.order_QTY}}</td>
+                          <td (click)="populateForm(pd)">{{pd.order_Total}}</td>
+                          <td (click)="populateForm(pd)">{{pd.order_Name}}</td>
+                          <td (click)="populateForm(pd)">{{pd.isOpen}}</td>
+                          <td>
+                            <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(pd.order_ID)"></i>
+                          </td>
+                          <td>
+                              <a routerLink="/user-profile"><button class="btn btn-success pull-right" >Cash Out</button></a>
+                          </td>
+                        </tr>
+                      </table>
+                </div>
+                <div class="col-md-7">
+                  <button class = "btn btn-primary btn sm" data-target="#loginModal" data-toggle="modal">Login</button>
+                  <div class = "modal col-md-7" id = "loginModal" tabindex = "-1">
+                    <div class = "modal-dialog">
+                      <div class = "modal-content">
+                        <div class = "modal-header">
+                          <button class = "close" data-dismiss="modal">&times;</button>
+                          <h4 class = "modal-title">Login</h4>
+                        </div>
+                        <div class = "modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="inputUserName">Username</label>
+                                    <input class="form-control" placeholder="Login Username"
+                                            type="text" id="inputUserName" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword">Password</label>
+                                    <input class="form-control" placeholder="Login Password"
+                                            type="password" id="inputPassword" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class = "modal-footer">
+                          <button class = "btn btn-primary">Login</button>
+                          <button class = "btn btn-primary" data-dismiss = "modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
   </div>
-</div>
+
+
+
+

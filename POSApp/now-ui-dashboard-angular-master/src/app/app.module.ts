@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -16,7 +17,9 @@ import { TicketDetailsComponent } from './ticket-details/ticket-details.componen
 import { TicketDetailsrealComponent } from './ticket-detailsreal/ticket-detailsreal.component';
 import { TicketDetailrealComponent } from './ticket-detailsreal/ticket-detailreal/ticket-detailreal.component';
 import { TicketDetaillistrealComponent } from './ticket-detailsreal/ticket-detaillistreal/ticket-detaillistreal.component';
-import { TicketDetailrealService } from './shared/ticket-detailreal.service';
+import { PaymentDetailService } from './shared/ticket-detailreal.service';
+import { PopupComponent } from './Popup/Popup.component';
+import { PopupModule } from './popup/pop-up.module';
 
 @NgModule({
   imports: [
@@ -25,8 +28,9 @@ import { TicketDetailrealService } from './shared/ticket-detailreal.service';
     HttpClientModule,
     ComponentsModule,
     RouterModule,
+    PopupModule,
     AppRoutingModule,
-    NgbModule,
+    NgbModule.forRoot(),
     ToastrModule.forRoot()
   ],
   declarations: [
@@ -35,10 +39,11 @@ import { TicketDetailrealService } from './shared/ticket-detailreal.service';
     TicketDetailsComponent,
     TicketDetailsrealComponent,
     TicketDetailrealComponent,
-    TicketDetaillistrealComponent
+    TicketDetaillistrealComponent,
+    PopupComponent
 
   ],
-  providers: [TicketDetailrealService],
+  providers: [PaymentDetailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

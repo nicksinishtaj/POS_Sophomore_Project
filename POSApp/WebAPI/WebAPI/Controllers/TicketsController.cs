@@ -13,33 +13,44 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
-        private readonly TicketDetailContext _context;
+        private readonly PaymentDetailContext _context;
+        public List<Product> GetProducts { get; set; }
 
-        public TicketsController(TicketDetailContext context)
+        public TicketsController(PaymentDetailContext context)
         {
             _context = context;
         }
 
+        public void OnGet()
+        {
+            GetProducts = _context.Products.ToList();
+            
+        }
+
         // GET: api/Tickets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TicketDetail>>> GetTickets()
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
         {
-            return await _context.TicketDetails.ToListAsync();
+            return await _context.Tickets.ToListAsync();
         }
 
         // PUT: api/Tickets/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicket(int id, TicketDetail ticket)
+        public async Task<IActionResult> PutTicket(int id, Ticket ticket)
         {
             if (id != ticket.order_ID)
             {
                 return BadRequest();
             }
+            OnGet();
+            var value = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COST;
+            ticket.order_Total = (int)value;
             _context.Entry(ticket).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+
+                    await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -58,9 +69,9 @@ namespace WebAPI.Controllers
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TicketDetail>> GetTicket(int id)
+        public async Task<ActionResult<Ticket>> GetTicket(int id)
         {
-            var paymentDetail = await _context.TicketDetails.FindAsync(id);
+            var paymentDetail = await _context.Tickets.FindAsync(id);
 
             if (paymentDetail == null)
             {
@@ -72,10 +83,17 @@ namespace WebAPI.Controllers
 
         // POST: api/Tickets
         [HttpPost]
-        public async Task<IActionResult> PostTicket(TicketDetail ticket)
+        public async Task<IActionResult> PostTicket(Ticket ticket)
         {
+            OnGet();
+            var value = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COST;
+            ticket.order_Total = value;
 
-            _context.TicketDetails.Add(ticket);
+            var nameValue = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_NAME;
+            ticket.order_Name = nameValue;
+
+            _context.Tickets.Add(ticket);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTicket", new { id = ticket.order_ID }, ticket);
@@ -83,16 +101,16 @@ namespace WebAPI.Controllers
 
         // DELETE: api/Tickets/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TicketDetail>> DeleteTicket(int id)
+        public async Task<ActionResult<Ticket>> DeleteTicket(int id)
         {
 
-            var ticket = await _context.TicketDetails.FindAsync(id);
+            var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
             }
 
-            _context.TicketDetails.Remove(ticket);
+            _context.Tickets.Remove(ticket);
             await _context.SaveChangesAsync();
 
             return ticket;
@@ -100,7 +118,7 @@ namespace WebAPI.Controllers
 
         private bool TicketExists(int id)
         {
-            return _context.TicketDetails.Any(e => e.order_ID == id);
+            return _context.Tickets.Any(e => e.order_ID == id);
         }
     }
 }

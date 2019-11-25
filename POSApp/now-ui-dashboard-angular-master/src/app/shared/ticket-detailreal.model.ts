@@ -1,10 +1,7 @@
-export class TicketDetailreal {
-
-    order_ID: number;
-    order_DATETIME: Date;
-    order_QTY: string;
-    order_Total: string;
-    prod_ID: string;
-
-
+export class PaymentDetail {
+    PMId :number;
+    CardOwnerName: string;
+    CardNumber: string;
+    ExpirationDate: string;
+    CVV: string;
 }

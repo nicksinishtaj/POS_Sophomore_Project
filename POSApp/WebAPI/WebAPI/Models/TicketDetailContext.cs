@@ -13,7 +13,7 @@ namespace WebAPI.Models
 
         }
 
-        public DbSet<TicketDetail> TicketDetails { get; set; }
+        public DbSet<Ticket> TicketDetails { get; set; }
 
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketDetailrealService } from './../../shared/ticket-detailreal.service';
+import { PaymentDetailService } from './../../shared/ticket-detailreal.service';
 
 @Component({
   selector: 'app-ticket-detailreal',
@@ -8,7 +8,7 @@ import { TicketDetailrealService } from './../../shared/ticket-detailreal.servic
 })
 export class TicketDetailrealComponent implements OnInit {
 
-  constructor(private service: TicketDetailrealService) { }
+  constructor(private service: PaymentDetailService) { }
 
   ngOnInit() {
   }
