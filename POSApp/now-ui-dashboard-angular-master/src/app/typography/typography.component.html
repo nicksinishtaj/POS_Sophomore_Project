@@ -1,0 +1,22 @@
+<div class="jumbtron">
+    <h1 class="display-4 text-center">Create a Ticket</h1>
+    <hr>
+    <div class="row">
+  <div class="col-md-7">
+    <table class="table table-hover">
+        <tr *ngFor="let pd of service.list">
+          <td (click)="populateForm(pd)">{{pd.order_QTY}}</td>
+          <td (click)="populateForm(pd)">{{pd.order_Total}}</td>
+          <td (click)="populateForm(pd)">{{pd.order_Name}}</td>
+          <td (click)="populateForm(pd)">{{pd.isOpen}}</td>
+          <td>
+            <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(pd.order_ID)"></i>
+          </td>
+          <td>
+              <a routerLink="/user-profile"><button class="btn btn-success pull-right" >Cash Out</button></a>
+          </td>
+        </tr>
+      </table>
+</div>
+    </div>
+</div>
