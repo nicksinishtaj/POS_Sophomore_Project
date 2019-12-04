@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Models;
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(PaymentDetailContext))]
-    partial class PaymentDetailContextModelSnapshot : ModelSnapshot
+    [Migration("20191203021758_CF")]
+    partial class CF
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,11 +166,15 @@ namespace WebAPI.Migrations
 
                     b.Property<int>("prod_ID");
 
+                    b.Property<int?>("server_ID");
+
                     b.Property<double>("tip");
 
                     b.HasKey("order_ID");
 
                     b.HasIndex("prod_ID");
+
+                    b.HasIndex("server_ID");
 
                     b.ToTable("Tickets");
                 });
@@ -187,6 +193,10 @@ namespace WebAPI.Migrations
                         .WithMany("Tickets")
                         .HasForeignKey("prod_ID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebAPI.Models.RealServer", "RealServer")
+                        .WithMany("Tickets")
+                        .HasForeignKey("server_ID");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-export class Server{
+export class RealServer{
     server_ID: number;
     server_LNAME: string;
     server_FNAME: string;

@@ -15,6 +15,8 @@ namespace WebAPI.Controllers
     {
         private readonly PaymentDetailContext _context;
         public List<Product> GetProducts { get; set; }
+        public List<RealServer> GetRealServers { get; set; }
+        public List<Ticket> GetTheTickets { get; set; }
 
         public TicketsController(PaymentDetailContext context)
         {
@@ -24,6 +26,9 @@ namespace WebAPI.Controllers
         public void OnGet()
         {
             GetProducts = _context.Products.ToList();
+            GetRealServers = _context.Servers.ToList();
+            GetTheTickets = _context.Tickets.ToList();
+            
             
         }
 
@@ -38,33 +43,28 @@ namespace WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTicket(int id, Ticket ticket)
         {
-            if (id != ticket.order_ID)
-            {
-                return BadRequest();
-            }
             OnGet();
-            var value = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COST;
-            ticket.order_Total = (int)value;
-            _context.Entry(ticket).State = EntityState.Modified;
+            var myTicket = GetTheTickets.Find(x => x.order_ID == ticket.order_ID);
+            myTicket.deposit = ticket.deposit;
+            myTicket.tip = ticket.tip;
 
-            try
-            {
+                var tip = myTicket.tip;
+                var deposit = myTicket.deposit;
+                var total = myTicket.order_Total;
 
-                    await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TicketExists(id))
+                if (deposit > total)
                 {
-                    return NotFound();
+                    var incrementedTip = deposit - total;
+                    tip = tip + incrementedTip;
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                await _context.SaveChangesAsync();
+            var a = GetRealServers.Find(x => x.server_ID == myTicket.server_ID);
+                var a1 =  GetRealServers.Find(x => x.server_ID == myTicket.server_ID).total_TIPS + tip;
+
+            _context.Servers.Add(a);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetTicket", new { id = ticket.order_ID }, ticket);
         }
 
         // GET: api/Tickets/5
@@ -78,6 +78,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
+            
             return paymentDetail;
         }
 
@@ -86,11 +87,29 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> PostTicket(Ticket ticket)
         {
             OnGet();
-            var value = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COST;
-            ticket.order_Total = value;
+            if (ticket.order_Name == null)
+            {
+                var value = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COST;
+                GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COUNT = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COUNT - 1;
+                ticket.order_Total = value;
+                int quantity = ticket.order_QTY;
+                ticket.order_Total = ticket.order_Total * quantity;
 
-            var nameValue = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_NAME;
-            ticket.order_Name = nameValue;
+
+                var nameValue = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_NAME;
+                ticket.order_Name = nameValue;
+            }
+            else
+            {
+                var value = GetProducts.Find(item => item.prod_NAME == ticket.order_Name).prod_COST;
+                ticket.order_Total = value;
+                int quantity = ticket.order_QTY;
+                ticket.order_Total = ticket.order_Total * quantity;
+
+                var nameValue = GetProducts.Find(item => item.prod_NAME == ticket.order_Name).prod_ID;
+                ticket.prod_ID = nameValue;
+                GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COUNT = GetProducts.Find(item => item.prod_ID == ticket.prod_ID).prod_COUNT - quantity;
+            }
 
             _context.Tickets.Add(ticket);
 
