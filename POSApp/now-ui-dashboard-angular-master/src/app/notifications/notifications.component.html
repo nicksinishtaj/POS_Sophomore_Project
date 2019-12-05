@@ -16,37 +16,37 @@
                   placeholder="Date" required>
                   </div>
               </div>
-              <!-- <div class="form-group">
+              <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <div class="input-group-text bg-white">
-                        <i class="far fa-credit-card"  [class.red-icon]="order_QTY.valid" [class.red-icon]="order_QTY.invalid && order_QTY.touched"></i>
+                        <i class="far fa-tally"  [class.red-icon]="server_ID.valid" [class.red-icon]="server_ID.invalid && server_ID.touched"></i>
                       </div>
                     </div>
-                    <input name="order_QTY" #order_QTY="ngModel" [(ngModel)]="service.formData.order_QTY" 
-                    class="form-control" placeholder="Quantity" maxlength="10" minlength="1">
+                    <input name="server_ID" #server_ID="ngModel" [(ngModel)]="service.formData.server_ID" 
+                    class="form-control" placeholder="Server ID" maxlength="10" minlength="1">
                   </div>
-                </div> -->
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-7">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <div class="input-group-text bg-white">
-                            <i class="fas fa-calendar-alt"  [class.green-icon]="order_QTY.valid" [class.red-icon]="order_QTY.invalid && order_QTY.touched"></i>
+                            <i class="fas"  [class.green-icon]="order_QTY.valid" [class.red-icon]="order_QTY.invalid && order_QTY.touched"></i>
                           </div>
                         </div>
                         <input name="order_QTY" #order_QTY="ngModel" [(ngModel)]="service.formData.order_QTY" class="form-control"
-                          placeholder="MM/YY" maxlength="10" minlength="1">
+                          placeholder="Quantity" maxlength="10" minlength="1">
                       </div>
                     </div>
                     <div class="form-group col-md-5">
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <div class="input-group-text bg-white">
-                              <i class="fas fa-key"  [class.green-icon]="prod_ID.valid" [class.red-icon]="prod_ID.invalid && prod_ID.touched"></i>
+                              <i class="fas"  [class.green-icon]="order_Name.valid" [class.red-icon]="order_Name.invalid && order_Name.touched"></i>
                             </div>
                           </div>
-                          <input type="prod_ID" name="prod_ID" #prod_ID="ngModel" [(ngModel)]="service.formData.prod_ID" class="form-control" placeholder="Prod Id"
+                          <input type="order_Name" name="order_Name" #prod_ID="ngModel" [(ngModel)]="service.formData.order_Name" class="form-control" placeholder="Order Name"
                           required  maxlength="10" minlength="1">
                         </div>
                       </div>
@@ -58,11 +58,22 @@
           </div>
                 <div class="col-md-7">
                     <table class="table table-hover">
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Total</th> 
+                            <th>Item</th>
+                            <th>Open</th>
+                            <th>Server</th>
+                            <th>Ticket Number</th>
+                            <th>Delete</th>
+                          </tr>
                         <tr *ngFor="let pd of service.list">
                           <td (click)="populateForm(pd)">{{pd.order_QTY}}</td>
                           <td (click)="populateForm(pd)">{{pd.order_Total}}</td>
                           <td (click)="populateForm(pd)">{{pd.order_Name}}</td>
                           <td (click)="populateForm(pd)">{{pd.isOpen}}</td>
+                          <td (click)="populateForm(pd)">{{pd.server_ID}}</td>
+                          <td (click)="populateForm(pd)">{{pd.order_ID}}</td>
                           <td>
                             <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(pd.order_ID)"></i>
                           </td>
@@ -73,7 +84,7 @@
                       </table>
                 </div>
                 <div class="col-md-7">
-                  <button class = "btn btn-primary btn sm" data-target="#loginModal" data-toggle="modal">Login</button>
+                  <button class = "btn btn-primary btn sm" data-target="#loginModal" data-toggle="modal">Clear All</button>
                   <div class = "modal col-md-7" id = "loginModal" tabindex = "-1">
                     <div class = "modal-dialog">
                       <div class = "modal-content">

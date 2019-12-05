@@ -18,6 +18,8 @@ namespace WebAPI.Models
         [Column(TypeName = "numeric(19,2)")]
         public double prod_COST { get; set; }
 
+        public int prod_COUNT { get; set; }
+
         public virtual ICollection<Ticket> Tickets { get; set; }
 
 

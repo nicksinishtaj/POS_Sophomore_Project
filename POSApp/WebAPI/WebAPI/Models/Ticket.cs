@@ -31,6 +31,8 @@ namespace WebAPI.Models
 
         public bool isOpen { get; set; }
 
+        public int server_ID { get; set; }
+
         [ForeignKey("prod_ID")]
         public virtual Product Product { get; set; }
 

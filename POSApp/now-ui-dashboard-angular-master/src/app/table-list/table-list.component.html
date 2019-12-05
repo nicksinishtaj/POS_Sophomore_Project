@@ -1,79 +1,94 @@
-<!DOCTYPE html>
-<html>
-<style>
-/* #mydiv {
-  position: absolute;
-  z-index: 9;
-  background-color: #f1f1f1;
-  text-align: center;
-  border: 1px solid #d3d3d3;
-} */
-​
-#mydivheader {
-  position: absolute;
-  padding: 10px;
-  cursor: move;
-  z-index: 10;
-  background-color: #2196F3;
-  color: #fff;
-}
-​
-/* position is the most important style needed for the DIV
-#mydiv was used in a prior iteration of this but wasnt needed after some reformatting*/
-</style>
-​
-​
+<div class="row">
+<div class = "col-md-7">
+<head>
+  <!-- <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Draggable - Auto-scroll</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">-->
+  <style>
+  #draggable, #draggable2, #draggable3, #draggable4, #draggable4, #draggable5, #draggable6, #draggable7, #draggable8, #draggable9, #draggable10 { width: 100px; height: 100px; padding: .5em; float: left; margin: 0 10px 10px 0; background-color: #566573; }
+  </style> 
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#draggable" ).draggable({ scroll: true });
+    $( "#draggable2" ).draggable({ scroll: true });
+    $( "#draggable3" ).draggable({ scroll: true });
+    $( "#draggable4" ).draggable({ scroll: true });
+	$( "#draggable5" ).draggable({ scroll: true });
+	$( "#draggable6" ).draggable({ scroll: true });
+	$( "#draggable7" ).draggable({ scroll: true });
+	$( "#draggable8" ).draggable({ scroll: true });
+	$( "#draggable9" ).draggable({ scroll: true });
+	$( "#draggable10" ).draggable({ scroll: true });
+  } );
+  </script>
+  <script>
+	clicked = true;
+		$(document).ready(function(){
+			$("button").click(function(){
+				if(clicked){
+					$(this).css('background-color', 'red');
+					clicked  = false;
+				} else {
+					$(this).css('background-color', 'blue');
+					clicked  = true;
+				}   
+			});
+		});
+  </script>
+</head>
 <body>
-​
-<div id="mydivheader">
-  Click here to move
+ 
+<div id="draggable" onclick="colorChange">
+  <p>Table1</p>
+  <button onclick="colorChange">Seat</button>
 </div>
-​
-​
-<script>
-dragElement(document.getElementById("mydivheader"));
-​
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // the header is where you move the DIV from
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV
-    elmnt.onmousedown = dragMouseDown;
-  }
-​
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves
-    document.onmousemove = elementDrag;
-  }
-​
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-​
-  function closeDragElement() {
-    // stop moving when mouse button is released
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-</script>
-​
+ 
+<div id="draggable2" >
+  <p>Table2</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+ 
+<div id="draggable3" >
+  <p>Table3</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable4" >
+  <p>Table4</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable5" >
+  <p>Table5</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable6" >
+  <p>Table6</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable7" >
+  <p>Table7</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable8" >
+  <p>Table8</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable9" >
+  <p>Table9</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+<div id="draggable10" >
+  <p>Table10</p>
+  <button onclick="colorChange">Seat</button>
+</div>
+ 
+<div style="height: 5000px; width: 1px;"></div>
+ 
+ 
 </body>
-</html>
+
+</div>
+</div>

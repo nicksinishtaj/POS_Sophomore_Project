@@ -8,5 +8,6 @@ export class Ticket{
     tip: number;
     deposit: number;
     isOpen: boolean;
+    server_ID: number;
 
 }

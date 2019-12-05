@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TicketService } from './../shared/ticketservice.service';
+import { ProductService } from './../shared/productservice.service';
 import { Ticket } from '../shared/ticketclass.model';
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig} from '@angular/material';
+import { Product } from '../shared/productclass.model';
 
 @Component({
   selector: 'app-maps',
@@ -14,7 +16,7 @@ import { MatDialog, MatDialogConfig} from '@angular/material';
 export class MapsComponent implements OnInit {
 
   constructor(private toastr: ToastrService, 
-              private service: TicketService) {}
+              private service: ProductService) {}
   
   ngOnInit() {
     this.resetForm();
@@ -25,27 +27,24 @@ export class MapsComponent implements OnInit {
     if (form != null)
       form.form.reset();
     this.service.formData = {
-      order_ID: 0,
-      order_DATETIME: new Date(),
-      order_QTY: 0,
-      order_Total: 0,
       prod_ID: 0,
-      order_Name: '',
-      tip: 0,
-      deposit: 0,
-      isOpen: true
+      prod_NAME: '',
+      prod_COST: 0,
+      prod_COUNT: 0
+
+
     }
   }
 
   onSubmit(form: NgForm) {
-    if (this.service.formData.order_ID == 0)
+    if (this.service.formData.prod_ID == 0)
       this.insertRecord(form);
     else
       this.updateRecord(form);
   }
 
   insertRecord(form: NgForm) {
-    this.service.postTicket().subscribe(
+    this.service.postProduct().subscribe(
       res => {
         debugger;
         this.resetForm(form);
@@ -59,7 +58,7 @@ export class MapsComponent implements OnInit {
     )
   }
   updateRecord(form: NgForm) {
-    this.service.putTicket().subscribe(
+    this.service.putProduct().subscribe(
       res => {
         this.resetForm(form);
         this.toastr.info('Submitted successfully', 'Ticket');
@@ -71,13 +70,13 @@ export class MapsComponent implements OnInit {
     )
   }
 
-  populateForm(pd: Ticket) {
+  populateForm(pd: Product) {
     this.service.formData = Object.assign({}, pd);
   }
 
   onDelete(PMId) {
-    if (confirm('Are you sure to delete this ticket ?')) {
-      this.service.deleteTicket(PMId)
+    if (confirm('Are you sure to delete this product ?')) {
+      this.service.deleteProduct(PMId)
         .subscribe(res => {
           debugger;
           this.service.refreshList();

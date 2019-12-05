@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { TicketService } from './../shared/ticketservice.service';
-import { Ticket } from '../shared/ticketclass.model';
+import { ServerService } from './../shared/serverservice.service';
+import { RealServer } from '../shared/serverclass.model';
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig} from '@angular/material';
@@ -14,7 +14,7 @@ import { MatDialog, MatDialogConfig} from '@angular/material';
 export class TypographyComponent implements OnInit {
 
   constructor(private toastr: ToastrService, 
-              private service: TicketService) {}
+              private service: ServerService) {}
   
   ngOnInit() {
     this.resetForm();
@@ -25,31 +25,27 @@ export class TypographyComponent implements OnInit {
     if (form != null)
       form.form.reset();
     this.service.formData = {
-      order_ID: 0,
-      order_DATETIME: new Date(),
-      order_QTY: 0,
-      order_Total: 0,
-      prod_ID: 0,
-      order_Name: '',
-      tip: 0,
-      deposit: 0,
-      isOpen: true
+      server_ID: 0,
+      server_LNAME: '',
+      server_FNAME: '',
+      server_MI: '',
+      total_TIPS: 0
     }
   }
 
   onSubmit(form: NgForm) {
-    if (this.service.formData.order_ID == 0)
+    if (this.service.formData.server_ID == 0)
       this.insertRecord(form);
     else
       this.updateRecord(form);
   }
 
   insertRecord(form: NgForm) {
-    this.service.postTicket().subscribe(
+    this.service.postServer().subscribe(
       res => {
         debugger;
         this.resetForm(form);
-        this.toastr.success('Submitted successfully', 'Ticket Created');
+        this.toastr.success('Submitted successfully', 'Server Created');
         this.service.refreshList();
       },
       err => {
@@ -59,10 +55,10 @@ export class TypographyComponent implements OnInit {
     )
   }
   updateRecord(form: NgForm) {
-    this.service.putTicket().subscribe(
+    this.service.putServer().subscribe(
       res => {
         this.resetForm(form);
-        this.toastr.info('Submitted successfully', 'Ticket');
+        this.toastr.info('Submitted successfully', 'Server');
         this.service.refreshList();
       },
       err => {
@@ -71,17 +67,17 @@ export class TypographyComponent implements OnInit {
     )
   }
 
-  populateForm(pd: Ticket) {
+  populateForm(pd: RealServer) {
     this.service.formData = Object.assign({}, pd);
   }
 
   onDelete(PMId) {
-    if (confirm('Are you sure to delete this ticket ?')) {
-      this.service.deleteTicket(PMId)
+    if (confirm('Are you sure to delete this Server ?')) {
+      this.service.deleteServer(PMId)
         .subscribe(res => {
           debugger;
           this.service.refreshList();
-          this.toastr.warning('Deleted successfully', 'Ticket Deletion');
+          this.toastr.warning('Deleted successfully', 'Server Deletion');
         },
           err => {
             debugger;

@@ -1,21 +1,21 @@
 <div class="jumbtron">
-  <h1 class="display-4 text-center">Create a Ticket</h1>
+  <h1 class="display-4 text-center">Cash Out</h1>
   <hr>
   <div class="row">
     <div class="col-md-5">
         <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
-            <input type="hidden" name="PMId" [value]="service.formData.PMId">
+            <input type="hidden" name="order_ID" [value]="service.formData.order_ID">
             <div class="form-group">
             </div>
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text bg-white">
-                    <i class="far fa-credit-card"  [class.red-icon]="CardNumber.valid" [class.red-icon]="CardNumber.invalid && CardNumber.touched"></i>
+                    <i class="far fa-credit-card"  [class.red-icon]="order_ID.valid" [class.red-icon]="order_ID.invalid && order_ID.touched"></i>
                   </div>
                 </div>
-                <input name="CardNumber" #CardNumber="ngModel" [(ngModel)]="service.formData.CardNumber" 
-                class="form-control" placeholder="Sever ID" required maxlength="16" minlength="16">
+                <input name="order_ID" #order_ID="ngModel" [(ngModel)]="service.formData.order_ID" 
+                class="form-control" placeholder="Ticket Number" minlength="1">
               </div>
             </div>
             <div class="form-row">
@@ -23,22 +23,22 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-text bg-white">
-                      <i class="fas fa-calendar-alt"  [class.green-icon]="ExpirationDate.valid" [class.red-icon]="ExpirationDate.invalid && ExpirationDate.touched"></i>
+                      <i class="fas fa-calendar-alt"  [class.green-icon]="Deposit.valid" [class.red-icon]="Deposit.invalid && Deposit.touched"></i>
                     </div>
                   </div>
-                  <input name="ExpirationDate" #ExpirationDate="ngModel" [(ngModel)]="service.formData.ExpirationDate" class="form-control"
-                    placeholder="Deposit" required maxlength="5" minlength="5">
+                  <input name="Deposit" #Deposit="ngModel" [(ngModel)]="service.formData.Deposit" class="form-control"
+                    placeholder="Deposit" minlength="1">
                 </div>
               </div>
               <div class="form-group col-md-5">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-text bg-white">
-                      <i class="fas fa-key"  [class.green-icon]="CVV.valid" [class.red-icon]="CVV.invalid && CVV.touched"></i>
+                      <i class="fas fa-key"  [class.green-icon]="tip.valid" [class.red-icon]="tip.invalid && tip.touched"></i>
                     </div>
                   </div>
-                  <input type="password" name="CVV" #CVV="ngModel" [(ngModel)]="service.formData.CVV" class="form-control" placeholder="Tip (optional)"
-                  required  maxlength="3" minlength="3">
+                  <input type="tip" name="tip" #tip="ngModel" [(ngModel)]="service.formData.tip" class="form-control" placeholder="Tip (optional)"
+                  required  minlength="1">
                 </div>
               </div>
             </div>
