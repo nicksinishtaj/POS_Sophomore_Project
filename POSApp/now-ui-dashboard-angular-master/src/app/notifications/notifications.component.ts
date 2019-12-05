@@ -33,7 +33,8 @@ export class NotificationsComponent implements OnInit {
       order_Name: '',
       tip: 0,
       deposit: 0,
-      isOpen: true
+      isOpen: true,
+      server_ID: 0
     }
   }
 

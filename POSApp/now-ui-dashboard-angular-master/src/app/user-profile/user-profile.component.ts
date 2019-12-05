@@ -40,6 +40,7 @@ export class UserProfileComponent implements OnInit {
       tip: 0,
       deposit: 0,
       isOpen: true,
+      server_ID: 0
     }
 
     this.service2.formData = {
